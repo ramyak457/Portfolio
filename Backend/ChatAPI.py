@@ -20,17 +20,20 @@ GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 GEMINI_BASE = "https://generativelanguage.googleapis.com/v1beta/openai/"
 GROQ_BASE = "https://api.groq.com/openai/v1"
-frontend_url = "https://ramyak457.github.io/Portfolio/"
 
 gemini = OpenAI(api_key=GOOGLE_API_KEY, base_url=GEMINI_BASE)
 groq = OpenAI(api_key=GROQ_API_KEY, base_url=GROQ_BASE)
 
 app = FastAPI()
 
-# CORS so your frontend (localhost:5173) can call the notebook server
+origins = [
+    "https://ramyak457.github.io",  
+    "https://ramyak457.github.io/Portfolio", 
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[frontend_url],   
+    allow_origins=[origins],   
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -144,13 +147,14 @@ async def chat(request: ChatRequest):
 nest_asyncio.apply()
 
 def run_uvicorn():
-    uvicorn.run(app, host="0.0.0.0", port=8000, log_level="info")
+    port = int(os.environ.get("PORT", 10000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
 
 # Start server in a daemon thread so the notebook stays usable
 thread = threading.Thread(target=run_uvicorn, daemon=True)
 thread.start()
 
-print("FastAPI server started at http://localhost:8000")
+print("FastAPI server started at ${port}")
 
 
 # In[ ]:
