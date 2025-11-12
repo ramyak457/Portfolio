@@ -20,6 +20,7 @@ GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 GEMINI_BASE = "https://generativelanguage.googleapis.com/v1beta/openai/"
 GROQ_BASE = "https://api.groq.com/openai/v1"
+frontend_url = "https://ramyak457.github.io/Portfolio/"
 
 gemini = OpenAI(api_key=GOOGLE_API_KEY, base_url=GEMINI_BASE)
 groq = OpenAI(api_key=GROQ_API_KEY, base_url=GROQ_BASE)
@@ -29,7 +30,7 @@ app = FastAPI()
 # CORS so your frontend (localhost:5173) can call the notebook server
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5174"],   
+    allow_origins=[frontend_url],   
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
