@@ -3,3 +3,5 @@ uvicorn
 requests
 nest_asyncio
 openai
+python-dotenv
+jupyter
