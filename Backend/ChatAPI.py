@@ -147,8 +147,8 @@ async def chat(request: ChatRequest):
 nest_asyncio.apply()
 
 def run_uvicorn():
-    port = int(os.environ.get("PORT", 10000))
-    uvicorn.run(app, host="0.0.0.0", port=port)
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port, log_level="info")
 
 # Start server in a daemon thread so the notebook stays usable
 thread = threading.Thread(target=run_uvicorn, daemon=True)
