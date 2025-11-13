@@ -150,19 +150,10 @@ def run_uvicorn():
     port = int(os.environ.get("PORT", 8000))
     uvicorn.run(app, host="0.0.0.0", port=port, log_level="info")
 
-# Start server in a daemon thread so the notebook stays usable
 thread = threading.Thread(target=run_uvicorn, daemon=True)
 thread.start()
 
-print("FastAPI server started at ${port}")
-
-
-# In[ ]:
-
-
-import requests
-resp = requests.post("http://localhost:8000/chat", json={"message":"I would like to know about Ramya's area of expertise", "model":"groq"})
-print(resp.json())
+print(f"FastAPI server started at port {os.environ.get('PORT', 8000)}")
 
 
 # %%
