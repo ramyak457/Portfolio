@@ -44,6 +44,16 @@ export default function Projects() {
       details:
         "Converts Canada Holidays API to a GraphQL API to retrieve information about Canadian holidays, population statistics, and province-related data, improving flexibility and efficiency in data retrieval." ,
     },
+    {
+      name: "Smart Recipe Assistant",
+      description:
+        "An AI-powered recipe assistant that generates personalized recipes based on user preferences and dietary restrictions.",
+      tech: "Python, Groq API, Gradio, OpenAI",
+      slideUrl: "https://huggingface.co/spaces/ramya457/Smart-Recipe-Assistant",
+      details:
+        "Smart Recipe Assistant is an AI-powered web application designed to simplify everyday cooking and calorie tracking. The idea originated from a real-life problem: as someone learning to cook while tracking daily calorie intake and macros, I found it time-consuming to generate recipes from available ingredients and manually log calories into food tracking apps."+
+        "This project brings together recipe generation, ingredient substitution, calorie estimation, and food image OCR into a single, easy-to-use interface."
+    }
   ];
 
   return (
@@ -94,14 +104,24 @@ export default function Projects() {
               </button>
               {selectedProject.name === "Public API → GraphQL Project" ? (
                 <a
-                    href="https://github.com/ramyak457/PublicAPIToGraphQL/tree/master"
+                    href={selectedProject.slideUrl}
                     target="_blank"
                     className="flex items-center bg-slate-800 hover:bg-blue-600 text-white px-4 py-2 rounded-full transition duration-200"
                 >
                     <ExternalLink className="w-4 h-4 mr-1" />
                     View Code on GitHub
                 </a>
-                ) : (
+                ) : selectedProject.name === "Smart Recipe Assistant" ? (
+                 <a
+                    href= {selectedProject.slideUrl}
+                    target="_blank"
+                    className="flex items-center bg-slate-800 hover:bg-blue-600 text-white px-4 py-2 rounded-full transition duration-200"
+                >
+                    <ExternalLink className="w-4 h-4 mr-1" />
+                    Demo
+                </a>                 
+                )                
+                  : (
                 <button
                     onClick={() => setShowSlide(true)}
                     className="flex items-center bg-slate-800 hover:bg-blue-600 text-white px-4 py-2 rounded-full transition duration-200"
@@ -109,7 +129,7 @@ export default function Projects() {
                     <ExternalLink className="w-4 h-4 mr-1" />
                     Overview
                 </button>
-            )}
+                )}
 
             </div>
 
