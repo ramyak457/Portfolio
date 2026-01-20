@@ -75,7 +75,7 @@ export default function Contacts(){
             {/* Footer with tech bubbles */}
             <div className="flex space-x-6 mt-12 justify-center">
                 <a
-                href="/Portfolio/ramya04.kumar@gmail.com"
+                href={`${import.meta.env.BASE_URL}ramya04.kumar@gmail.com`}
                 className="text-gray-300 hover:text-red-500 transition text-3xl"
                 >
                 <SiGmail />
@@ -95,7 +95,7 @@ export default function Contacts(){
                 <SiGithub />
                 </a>
                 <a
-                href="/Portfolio/public/RamyaResume.pdf"
+                href={`${import.meta.env.BASE_URL}RamyaResume.pdf`}
                 title="Resume"
                 target="_blank"
                 className="text-gray-300 hover:text-gray-100 transition text-3xl"
