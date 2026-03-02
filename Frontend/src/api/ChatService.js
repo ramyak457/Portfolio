@@ -1,5 +1,5 @@
 export async function sendMessageToChatAPI(message, model) {
-    const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+    const BASE_URL = import.meta.env.VITE_API_BASE_URL;
     const response = await fetch(`${BASE_URL}/chat`, {
         method: "POST",
         headers: {
