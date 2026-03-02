@@ -129,6 +129,9 @@ system_prompt = """
     B.E. Computer Science and Engineering                   Anna University, India                    August 2014 - April 2018 
 
     """
+@app.get("/")
+async def root():
+    return {"status": "running"}
 
 @app.post("/chat")
 async def chat(request: ChatRequest):
@@ -161,18 +164,5 @@ async def chat(request: ChatRequest):
 
 
 # In[3]:
-
-
-nest_asyncio.apply()
-
-def run_uvicorn():
-    port = int(os.environ.get("PORT", 8000))
-    uvicorn.run(app, host="0.0.0.0", port=port, log_level="info")
-
-thread = threading.Thread(target=run_uvicorn, daemon=True)
-thread.start()
-
-print(f"FastAPI server started at port {os.environ.get('PORT', 8000)}")
-
 
 # %%
