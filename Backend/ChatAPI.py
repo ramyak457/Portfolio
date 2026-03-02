@@ -28,7 +28,7 @@ app = FastAPI()
 
 origins = [
     "https://ramyak457.github.io",  
-    "https://ramyak457.github.io/Portfolio", 
+    "https://ramyak457.github.io/Portfolio"
 ]
 
 app.add_middleware(
@@ -48,18 +48,22 @@ system_prompt = """
     Don't include words like "The Resume does not contain..." in your answers. You should be able to answer any questions that HR/Recruiters might ask based on the resume provided includig generic questions like "Tell me about yourself", "What are your strengths and weaknesses?", "Why should we hire you?", "Describe a challenging situation you faced at work and how you handled it.", etc.
     Being a personal assistant, you need to be very familiar about the resume and answer questions to the best of your ability. Make sure to give brief answers and avoid being too verbose.
 
+    If the user asks to open, show, or start the presentation, respond ONLY with the exact text:
+    OPEN_PRESENTATION
+    Do not include any other words or characters.
+    For all other questions, respond normally with a concise answer.
+
     Here is my resume:
     RAMYA KUMAR 
     Vancouver, British Columbia, Canada | +1(604) 203-9314
     ramya04.kumar@gmail.com | linkedin.com/in/ramya457 | https://github.com/ramyak457 
 
     SUMMARY 
-    > Software Developer with over 5 years of experience in full stack .NET development, specializing in design and implementation of scalable, secure, and high-performance applications.
-    > Proactive in modernizing legacy systems using cloud technologies and aligning solutions with current industry standards, resulting in improved system performance, stability, and user satisfaction.
-    > Experienced in Agile development methodologies with a strong focus on timely resolution of production issues.
-    > Bridged the gap between business goals and technical execution across diverse domains including Finance, Retail, and Consumer goods.
-    > Collaborative team player with excellent problem-solving and communication skills, committed to delivering quality solutions in cross-functional environments.
-
+    > Software Developer with 5+ years of experience building and modernizing cloud-native .NET applications.
+    > Strong expertise in C#, ASP.NET Core, REST and GraphQL APIs, MS SQL/Entity Framework, and front-end development using React & TypeScript.
+    > Proven track record modernizing legacy systems, improving performance and reliability, and delivering production features in Agile teams.
+    > Actively integrating LLM APIs and AI workflows into practical applications while expanding hands-on experience with Azure services and Azure DevOps Pipelines, leveraging AWS foundation.
+    
     SKILLS
     Languages & Frameworks: C#, .NET Core, ASP.NET MVC, VB.NET, WCF/WPF, JavaScript, ReactJS
     Database Management: MS SQL Server, Entity Framework, Elasticsearch
@@ -68,8 +72,16 @@ system_prompt = """
     Tools: Splunk, Datadog, Version Control (Git, Bitbucket), Confluence, Jira
     Other: GraphQL, REST APIs, SOAP/XML, Microservices, SAML 2.0, Agile (SAFe)
 
-    EXPERIENCE 	
-    Mark Anthony Group - Software Developer 				                                              April 2025 – Present    
+    EXPERIENCE 
+    Aihiki Group Inc - Software Developer (Contract) 				                                              October 2025 – Present
+    > Contributed to the development of Volume Planner, a CRM-oriented application, focusing on backend services in C#/.Net Core and strengthening integration between application services and relational databases.
+    > Implemented role-based workflow using JWT Authentication to manage planning inputs, pricing data, and tracking.
+    > Integrated cloud-based components for file storage, audit logging and reporting using Azure logic apps and Azure functions, improving scalability and system performance.
+    > Developed and optimized stored procedures and queries to enable faster data retrieval by backend services, resulting in improved application response times.
+    > Supported continuous delivery using Jenkins, assisting with automated build and deployment processes across development and testing environments.
+    > Integrated AI models for image processing (image to text conversion - OCR) from user uploads.
+
+    Mark Anthony Group - Software Developer 				                                              April 2025 – October 2025    
 
     > Modernization of legacy Partner Portal, Volume Planner, and Billing applications from on-premise to AWS using .NET Core and Lambda, improving performance and system reliability by 35%.
     > Rebuilt billing workflows to process $2M+ claims, reducing processing time by 50% with automated invoicing and efficient SQL refactoring of stored procedures and database design.
@@ -96,11 +108,17 @@ system_prompt = """
     > Built Splunk dashboards for proactive issue detection and faster resolution. 
 
     RECENT WORK & CERTIFICATIONS  
-    Freelance Software Developer (Fiverr | December 2023 – March 2025)
-
-    > Implemented GraphQL solutions to optimize data requests, improving response time by 30%.
-    > Developed e-commerce solutions for inventory and order management using ASP.NET MVC
-    > Designed and built custom web applications, including photography and resume portfolios.
+    Smart Recipe Assistant: URL: https://huggingface.co/spaces/ramya457/Smart-Recipe-Assistant
+    Built an AI-driven recipe generator that creates personalized recipes based on available ingredients and provides calorie
+    breakdown from user-uploaded images. Implemented using Gradio, Groq LLMs, and deployed on Hugging Face Spaces.
+    
+    AI-Powered Personal Assistant Chatbot: URL: https://ramyak457.github.io/Portfolio/
+    Integrated an AI-personal assistant chatbot into my portfolio site to handle user queries, exploring LLM models in interactive
+    UI experience.
+    
+    Employee Expense Management 
+    Developing an end-to-end Employee Expense Management System with ASP.NET Core, enabling role-based expense
+    submission, approval workflows, and receipt management.
 
     Certifications
 
@@ -108,8 +126,7 @@ system_prompt = """
     > AWS Cloud Practitioner 
 
     EDUCATION 
-    B.E. Computer Science and Engineering                   Anna University, India                    August 2014 - April 2018
-    MS Computer Science*                                    University of Colorado Boulder            April 2025 - Present 
+    B.E. Computer Science and Engineering                   Anna University, India                    August 2014 - April 2018 
 
     """
 
@@ -137,6 +154,8 @@ async def chat(request: ChatRequest):
         reply = resp.choices[0].message.content
     else:
         reply = "Unknown model. Choose 'gemini' or 'groq'."
+    if reply.strip() == "OPEN_PRESENTATION":
+        return {"action": "open_presentation"}
 
     return {"reply": reply}
 
